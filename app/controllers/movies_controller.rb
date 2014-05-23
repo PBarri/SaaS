@@ -11,13 +11,21 @@ class MoviesController < ApplicationController
     sort = params[:sort]
     ratings = params[:ratings]
     @movies = Movie.all
-
-    if sort == "title"
-		@movies = Movie.find(:all, :order => "title")
-		@titleClass = "hilite"
+    if ratings != nil
+		@movies = Array.new
+		@all_ratings.each { |k, v|
+			@all_ratings[k] = 0;
+		}
+		ratings.each { |k, v|
+			@movies.concat(Movie.find_all_by_rating(k))
+			@all_ratings[k] = 1;
+		}
 	end
-	if sort == "release"
-		@movies = Movie.find(:all, :order => "release_date")
+    if sort == "title"
+		@movies = Movie.order("title").all
+		@titleClass = "hilite"
+	elsif sort == "release"
+		@movies = Movie.order("release_date").all
 		@releaseClass = "hilite"
 	end
   end

@@ -10,22 +10,15 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.ratings
     sort = params[:sort]
     ratings = params[:ratings]
-    if ratings.is_a?(Array)
-		if !ratings.empty?
-			ratings.each do |x|
-				string = ":rating => x.key AND"
-			end
-			@movies = Movie.find(string)
-		end
-    end
+    @movies = Movie.all
+
     if sort == "title"
-		@movies = Movie.order(:order => "title")
+		@movies = Movie.find(:all, :order => "title")
 		@titleClass = "hilite"
-	elsif sort == "release"
-		@movies = Movie.find(:order => "release_date")
+	end
+	if sort == "release"
+		@movies = Movie.find(:all, :order => "release_date")
 		@releaseClass = "hilite"
-	else    
-		@movies = Movie.all
 	end
   end
 

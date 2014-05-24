@@ -3,10 +3,10 @@ class Movie < ActiveRecord::Base
   
   def self.ratings
 	hash = Hash.new
-	hash['G'] = 1
-	hash['PG'] = 1
-	hash['PG-13'] = 1
-	hash['R'] = 1
+	hash['G'] = true
+	hash['PG'] = true
+	hash['PG-13'] = true
+	hash['R'] = true
 	return hash
   end
 end

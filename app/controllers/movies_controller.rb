@@ -3,29 +3,34 @@ class MoviesController < ApplicationController
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
+    session[:sort] = params[:sort]
+    session[:direction] = params[:direction]
+    session[:ratings] = params[:ratings]
     # will render app/views/movies/show.<extension> by default
   end
 
   def index
     @all_ratings = Movie.ratings
-    sort = params[:sort]
-    ratings = params[:ratings]
+    @sort = (session.has_key?(:sort)) ? session[:sort] : params[:sort]
+    @direction = (session.has_key?(:direction)) ? session[:direction] : params[:direction]
+    @ratings =  (session.has_key?(:ratings)) ? session[:ratings] : params[:ratings]
+    session.clear
     @movies = Movie.all
-    if ratings != nil
+    if @ratings != nil
 		@movies = Array.new
 		@all_ratings.each { |k, v|
-			@all_ratings[k] = 0;
+			@all_ratings[k] = false;
 		}
-		ratings.each { |k, v|
+		@ratings.each { |k, v|
 			@movies.concat(Movie.find_all_by_rating(k))
-			@all_ratings[k] = 1;
+			@all_ratings[k] = true;
 		}
 	end
-    if sort == "title"
-		@movies = Movie.order("title").all
+    if @sort == "title"
+		@movies = Movie.order("title" + ' ' + @direction).all
 		@titleClass = "hilite"
-	elsif sort == "release"
-		@movies = Movie.order("release_date").all
+	elsif @sort == "release_date"
+		@movies = Movie.order("release_date" + ' ' + @direction).all
 		@releaseClass = "hilite"
 	end
   end

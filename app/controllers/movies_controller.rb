@@ -10,29 +10,36 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @all_ratings = Movie.ratings
+    @all_ratings = (session.has_key?(:all_ratings)) ? session[:all_ratings] : Movie.ratings
     @sort = (session.has_key?(:sort)) ? session[:sort] : params[:sort]
     @direction = (session.has_key?(:direction)) ? session[:direction] : params[:direction]
     @ratings =  (session.has_key?(:ratings)) ? session[:ratings] : params[:ratings]
+    @movies_id = (session.has_key?(:movies_ratings)) ? session[:movies_ratings] : Movie.select("id")
     session.clear
     @movies = Movie.all
     if @ratings != nil
 		@movies = Array.new
+		@movies_id = Array.new
 		@all_ratings.each { |k, v|
 			@all_ratings[k] = false;
 		}
 		@ratings.each { |k, v|
-			@movies.concat(Movie.find_all_by_rating(k))
+			@movies.concat(Movie.where(rating: k).all)
+			@movies_id.concat(Movie.select("id").where(rating: k))
 			@all_ratings[k] = true;
 		}
+		session[:movies_ratings] = @movies_id
+		session[:all_ratings] = @all_ratings
 	end
     if @sort == "title"
-		@movies = Movie.order("title" + ' ' + @direction).all
+		@movies = Movie.order("title" + ' ' + @direction).where(id: @movies_id)
 		@titleClass = "hilite"
 	elsif @sort == "release_date"
-		@movies = Movie.order("release_date" + ' ' + @direction).all
+		@movies = Movie.order("release_date" + ' ' + @direction).where(id: @movies_id)
 		@releaseClass = "hilite"
 	end
+	session[:movies_ratings] = @movies_id
+	session[:all_ratings] = @all_ratings
   end
 
   def new

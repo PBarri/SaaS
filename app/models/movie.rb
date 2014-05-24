@@ -9,4 +9,5 @@ class Movie < ActiveRecord::Base
 	hash['R'] = true
 	return hash
   end
+  
 end

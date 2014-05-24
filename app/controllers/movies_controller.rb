@@ -10,12 +10,19 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @all_ratings = (session.has_key?(:all_ratings)) ? session[:all_ratings] : Movie.ratings
-    @sort = (session.has_key?(:sort)) ? session[:sort] : params[:sort]
-    @direction = (session.has_key?(:direction)) ? session[:direction] : params[:direction]
-    @ratings =  (session.has_key?(:ratings)) ? session[:ratings] : params[:ratings]
+	if session.has_key?(:sort) || session.has_key?(:direction) || session.has_key?(:ratings)
+		flash.keep
+		@sort = session[:sort]
+		@direction = session[:direction]
+		@ratings = session[:ratings]
+		session.clear
+		redirect_to movies_path(:sort => @sort, :direction => @direction, :ratings => @ratings)
+	end
+    @all_ratings = (params[:all_ratings] != nil) ? params[:all_ratings] : Movie.ratings
+    @sort = params[:sort]
+    @direction = params[:direction]
+    @ratings = (session.has_key?(:ratings)) ? session[:ratings] : params[:ratings]
     @movies_id = (session.has_key?(:movies_ratings)) ? session[:movies_ratings] : Movie.select("id")
-    session.clear
     @movies = Movie.all
     if @ratings != nil
 		@movies = Array.new
@@ -29,7 +36,6 @@ class MoviesController < ApplicationController
 			@all_ratings[k] = true;
 		}
 		session[:movies_ratings] = @movies_id
-		session[:all_ratings] = @all_ratings
 	end
     if @sort == "title"
 		@movies = Movie.order("title" + ' ' + @direction).where(id: @movies_id)

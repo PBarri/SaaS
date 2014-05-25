@@ -2,12 +2,7 @@ class Movie < ActiveRecord::Base
   attr_accessible :title, :rating, :description, :release_date
   
   def self.ratings
-	hash = Hash.new
-	hash['G'] = true
-	hash['PG'] = true
-	hash['PG-13'] = true
-	hash['R'] = true
-	return hash
+	hash = {"G" => 1, "PG" => 1, "PG-13" => 1, "R" => 1}
   end
   
 end

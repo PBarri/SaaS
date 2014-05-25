@@ -3,49 +3,40 @@ class MoviesController < ApplicationController
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
-    session[:sort] = params[:sort]
-    session[:direction] = params[:direction]
-    session[:ratings] = params[:ratings]
     # will render app/views/movies/show.<extension> by default
+    @sort = session[:sort]
+    @direction = session[:direction]
+    @ratings = session[:ratings]
   end
 
   def index
-	if session.has_key?(:sort) || session.has_key?(:direction) || session.has_key?(:ratings)
+    
+    @all_ratings = Movie.ratings
+    
+    sort = (params[:sort] != nil) ? params[:sort] : session[:sort]
+	direction = (params[:direction] != nil) ? params[:direction] : session[:direction]
+    @ratings = (params[:ratings] != nil) ? params[:ratings] : session[:ratings]
+	@ratings = @all_ratings if @ratings == nil
+    
+    session[:sort] = sort
+    session[:direction] = direction
+    session[:ratings] = @ratings
+    
+    if params[:redirect] != nil
 		flash.keep
-		@sort = session[:sort]
-		@direction = session[:direction]
-		@ratings = session[:ratings]
-		session.clear
-		redirect_to movies_path(:sort => @sort, :direction => @direction, :ratings => @ratings)
-	end
-    @all_ratings = (params[:all_ratings] != nil) ? params[:all_ratings] : Movie.ratings
-    @sort = params[:sort]
-    @direction = params[:direction]
-    @ratings = (session.has_key?(:ratings)) ? session[:ratings] : params[:ratings]
-    @movies_id = (session.has_key?(:movies_ratings)) ? session[:movies_ratings] : Movie.select("id")
-    @movies = Movie.all
-    if @ratings != nil
-		@movies = Array.new
-		@movies_id = Array.new
-		@all_ratings.each { |k, v|
-			@all_ratings[k] = false;
-		}
-		@ratings.each { |k, v|
-			@movies.concat(Movie.where(rating: k).all)
-			@movies_id.concat(Movie.select("id").where(rating: k))
-			@all_ratings[k] = true;
-		}
-		session[:movies_ratings] = @movies_id
-	end
-    if @sort == "title"
-		@movies = Movie.order("title" + ' ' + @direction).where(id: @movies_id)
+		redirect_to movies_path(:sort => sort, :direction => direction, :ratings => @ratings)
+    end
+    
+    case sort
+    when 'title'
 		@titleClass = "hilite"
-	elsif @sort == "release_date"
-		@movies = Movie.order("release_date" + ' ' + @direction).where(id: @movies_id)
+		@movies = Movie.find_all_by_rating(@ratings.keys, order: sort + ' ' + direction)
+	when 'release_date'
 		@releaseClass = "hilite"
-	end
-	session[:movies_ratings] = @movies_id
-	session[:all_ratings] = @all_ratings
+		@movies = Movie.find_all_by_rating(@ratings.keys, order: sort + ' ' + direction)
+	else
+		@movies = Movie.find_all_by_rating(@ratings.keys)
+	end    
   end
 
   def new
@@ -55,7 +46,7 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.create!(params[:movie])
     flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
+    redirect_to movies_path(:sort => session[:sort], :direction => session[:direction], :ratings => session[:ratings])
   end
 
   def edit
@@ -73,7 +64,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
-    redirect_to movies_path
+    redirect_to movies_path(:sort => session[:sort], :direction => session[:direction], :ratings => session[:ratings])
   end
 
 end

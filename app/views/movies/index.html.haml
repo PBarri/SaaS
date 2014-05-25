@@ -4,7 +4,7 @@
 = form_tag movies_path, :method => :get, :id => "ratings_form" do
   Include:
   = hidden_field_tag "sort", params[:sort]
-  = hidden_field_tag "direction", params[:direction]
+  
   - @all_ratings.each do |rating, v|
     = rating
     = check_box_tag "ratings[#{rating}]", 1, @ratings.include?(rating), id: "ratings_#{rating}"

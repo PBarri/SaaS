@@ -13822,3 +13822,128 @@ Served asset /jquery_ujs.js - 304 Not Modified (0ms)
 
 Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-25 17:03:42 +0200
 Served asset /application.js - 304 Not Modified (4ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2014-05-25 17:39:53 +0200
+Connecting to database specified by database.yml
+Processing by MoviesController#index as HTML
+Redirected to http://localhost:3000/movies?direction=ASC&ratings%5BPG-13%5D=1&sort=title
+  [1m[36mMovie Load (0.4ms)[0m  [1mSELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('PG-13') ORDER BY title ASC[0m
+Completed 302 Found in 85.7ms (ActiveRecord: 4.1ms)
+
+
+Started GET "/movies?direction=ASC&ratings%5BPG-13%5D=1&sort=title" for 127.0.0.1 at 2014-05-25 17:39:54 +0200
+Processing by MoviesController#index as HTML
+  Parameters: {"direction"=>"ASC", "ratings"=>{"PG-13"=>"1"}, "sort"=>"title"}
+  [1m[35mMovie Load (0.4ms)[0m  SELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('PG-13') ORDER BY title ASC
+  Rendered movies/index.html.haml within layouts/application (18.8ms)
+Completed 200 OK in 131.9ms (Views: 129.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-05-25 17:39:54 +0200
+Served asset /application.css - 304 Not Modified (8ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-05-25 17:39:54 +0200
+Served asset /jquery.js - 304 Not Modified (14ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-05-25 17:39:54 +0200
+Served asset /jquery_ujs.js - 304 Not Modified (5ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-25 17:39:54 +0200
+Served asset /application.js - 304 Not Modified (10ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2014-05-25 17:40:05 +0200
+Processing by MoviesController#index as HTML
+Redirected to http://localhost:3000/movies?direction=ASC&ratings%5BPG-13%5D=1&sort=title
+  [1m[36mMovie Load (0.4ms)[0m  [1mSELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('PG-13') ORDER BY title ASC[0m
+Completed 302 Found in 4.2ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/movies?direction=ASC&ratings%5BPG-13%5D=1&sort=title" for 127.0.0.1 at 2014-05-25 17:40:05 +0200
+Processing by MoviesController#index as HTML
+  Parameters: {"direction"=>"ASC", "ratings"=>{"PG-13"=>"1"}, "sort"=>"title"}
+  [1m[35mMovie Load (0.6ms)[0m  SELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('PG-13') ORDER BY title ASC
+  Rendered movies/index.html.haml within layouts/application (5.8ms)
+Completed 200 OK in 16.5ms (Views: 14.2ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-05-25 17:40:05 +0200
+Served asset /application.css - 304 Not Modified (4ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:05 +0200
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:05 +0200
+Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:05 +0200
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2014-05-25 17:40:06 +0200
+Processing by MoviesController#index as HTML
+Redirected to http://localhost:3000/movies?direction=ASC&ratings%5BPG-13%5D=1&sort=title
+  [1m[36mMovie Load (0.4ms)[0m  [1mSELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('PG-13') ORDER BY title ASC[0m
+Completed 302 Found in 4.2ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/movies?direction=ASC&ratings%5BPG-13%5D=1&sort=title" for 127.0.0.1 at 2014-05-25 17:40:06 +0200
+Processing by MoviesController#index as HTML
+  Parameters: {"direction"=>"ASC", "ratings"=>{"PG-13"=>"1"}, "sort"=>"title"}
+  [1m[35mMovie Load (0.4ms)[0m  SELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('PG-13') ORDER BY title ASC
+  Rendered movies/index.html.haml within layouts/application (5.8ms)
+Completed 200 OK in 16.8ms (Views: 15.3ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-05-25 17:40:06 +0200
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:06 +0200
+Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:06 +0200
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:06 +0200
+Served asset /jquery.js - 304 Not Modified (1ms)
+
+
+Started GET "/movies" for 127.0.0.1 at 2014-05-25 17:40:09 +0200
+Processing by MoviesController#index as HTML
+Redirected to http://localhost:3000/movies?direction=ASC&ratings%5BPG-13%5D=1&sort=title
+  [1m[36mMovie Load (0.4ms)[0m  [1mSELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('PG-13') ORDER BY title ASC[0m
+Completed 302 Found in 3.9ms (ActiveRecord: 0.4ms)
+
+
+Started GET "/movies?direction=ASC&ratings%5BPG-13%5D=1&sort=title" for 127.0.0.1 at 2014-05-25 17:40:09 +0200
+Processing by MoviesController#index as HTML
+  Parameters: {"direction"=>"ASC", "ratings"=>{"PG-13"=>"1"}, "sort"=>"title"}
+  [1m[35mMovie Load (0.3ms)[0m  SELECT "movies".* FROM "movies" WHERE "movies"."rating" IN ('PG-13') ORDER BY title ASC
+  Rendered movies/index.html.haml within layouts/application (5.5ms)
+Completed 200 OK in 16.3ms (Views: 14.6ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-05-25 17:40:09 +0200
+Served asset /application.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:09 +0200
+Served asset /jquery_ujs.js - 304 Not Modified (37ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:10 +0200
+Served asset /application.js - 304 Not Modified (1ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-05-25 17:40:10 +0200
+Served asset /jquery.js - 304 Not Modified (3ms)

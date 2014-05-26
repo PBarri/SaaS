@@ -10,19 +10,13 @@ class MoviesController < ApplicationController
     
     @all_ratings = Movie.ratings
     
-    sort = (params[:sort] != nil) ? params[:sort] : session[:sort]
-	direction = (params[:direction] != nil) ? params[:direction] : session[:direction]
-    @ratings = (params[:ratings] != nil) ? params[:ratings] : session[:ratings]
-	@ratings = @all_ratings if @ratings == nil
+    session[:ratings] = params[:ratings] unless params[:ratings].nil?
+    session[:direction] = params[:direction] unless params[:direction].nil?
+    session[:sort] = params[:sort] unless params[:sort].nil?
     
-    session[:sort] = sort
-    session[:direction] = direction
-    session[:ratings] = @ratings
-    
-    if params[:redirect] != nil
-		flash.keep
-		redirect_to movies_path(:sort => sort, :direction => direction, :ratings => @ratings)
-    end
+    @ratings = session[:ratings] || @all_ratings    
+    sort = session[:sort]
+    direction = session[:direction]
     
     case sort
     when 'title'
@@ -33,7 +27,10 @@ class MoviesController < ApplicationController
 		@movies = Movie.find_all_by_rating(@ratings.keys, order: sort + ' ' + direction)
 	else
 		@movies = Movie.find_all_by_rating(@ratings.keys)
-	end    
+	end
+	if params[:ratings] != session[:ratings] and params[:direction] != session[:direction] and params[:sort] != session[:sort]
+		redirect_to (movies_path(:ratings => session[:ratings], :direction => session[:direction], :sort => session[:sort]))
+	end
   end
 
   def new
